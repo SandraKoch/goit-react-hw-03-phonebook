@@ -14,6 +14,7 @@ export class ContactList extends Component {
             )
             .map(item => (
               <ContactItem
+                key={item.id}
                 item={item}
                 deleteItem={id => this.props.deleteItem(id)}
               />

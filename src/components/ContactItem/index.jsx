@@ -6,7 +6,7 @@ export class ContactItem extends Component {
   render() {
     const { item } = this.props;
     return (
-      <li key={item.id} className={css.contactItem}>
+      <li className={css.contactItem}>
         {item.name}: {item.phone}
         <button
           className={css.deleteBtn}

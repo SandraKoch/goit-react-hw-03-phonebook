@@ -7,29 +7,45 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 export class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', phone: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', phone: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', phone: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', phone: '227-91-26' },
-    ],
+    contacts: [],
     filter: '',
   };
+
+  componentDidMount() {
+    console.log('componentDidMount');
+    const contacts = localStorage.getItem('My-Contacts');
+
+    try {
+      const parsedContacts = JSON.parse(contacts);
+
+      this.setState(() => ({
+        contacts: parsedContacts,
+      }));
+    } catch (error) {
+      console.log('error', error);
+    }
+  }
+
+  componentDidUpdate(_, prevState) {
+    if (this.state.contacts.length !== prevState.contacts.length) {
+      localStorage.setItem('My-Contacts', JSON.stringify(this.state.contacts));
+      console.log('componentDidUpdate');
+    }
+  }
 
   addContact = (newContact, newNumber) => {
     const exists = this.state.contacts.find(
       contact => contact.name === newContact
     );
     if (!exists) {
+      const newPersonContact = {
+        name: newContact,
+        id: nanoid(),
+        phone: newNumber,
+      };
+
       this.setState(prevState => ({
-        contacts: [
-          ...prevState.contacts,
-          {
-            name: newContact,
-            id: nanoid(),
-            phone: newNumber,
-          },
-        ],
+        contacts: [...prevState.contacts, newPersonContact],
       }));
       Notify.success(`${newContact} has been added to your Phonebook`);
     } else {
