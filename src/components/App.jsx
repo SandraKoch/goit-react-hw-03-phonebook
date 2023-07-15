@@ -58,7 +58,6 @@ export class App extends Component {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          fontSize: 40,
           color: '#010101',
         }}
       >

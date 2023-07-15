@@ -27,6 +27,7 @@
 }
 
 .submitBtn:hover {
-  color: var(--light-color);
-  background-color: var(--primary-color);
+  color: var(--primary-color);
+  background-color: var(--btn-active);
+  border: 1px solid var(--bg-color);
 }
